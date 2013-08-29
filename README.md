@@ -1,9 +1,9 @@
 blitflip
 ========
 
-Fast sprite rendering routine that supports horizontal and vertical flipping
+Fast sprite rendering routine that supports horizontal and vertical flipping.  It uses the SDL library but can be adapted to other environments.
 
-Usage
+Usage:
 
 ````c
     BlitFlip(
@@ -14,8 +14,14 @@ Usage
         int flip_h, /* Flip left/right */
         int flip_v, /* Flip top/bottom */
         int true_alpha /* Use true alpha blending */
-        )
+        );
 ````
+
+Before using bitflip, please make sure that both source and destinations images ar locked; the sprite may be partly or fully offscreen.
+
+You source surface must be 32 bit RGBA, with 0xff000000 as the alpha bit-mask.
+The destination surface must be 32 bit RGB, with the same color component ordering a the source image.
+
 
 Author and Licensing
 --------------------
