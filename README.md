@@ -20,7 +20,7 @@ Usage:
 Before using bitflip, please make sure that both source and destinations images ar locked; the sprite may be partly or fully offscreen.
 
 You source surface must be 32 bit RGBA, with 0xff000000 as the alpha bit-mask.
-The destination surface must be 32 bit RGB, with the same color component ordering a the source image.
+The destination surface must be 32 bit RGB, with the same color component ordering as the source image.
 
 
 Author and Licensing
