@@ -12,7 +12,8 @@ Usage
         int x,
         int y,
         int flip_h, /* Flip left/right */
-        int flip_v /* Flip top/bottom */
+        int flip_v, /* Flip top/bottom */
+        int true_alpha /* Use true alpha blending */
         )
 ````
 
