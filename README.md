@@ -1,4 +1,4 @@
-blitflip
+BlitFlip
 ========
 
 Fast sprite rendering routine that supports horizontal and vertical flipping.  It uses the SDL library but can be adapted to other environments.
