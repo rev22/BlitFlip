@@ -31,13 +31,13 @@ void BlitFlip(
   unsigned int h = dst->h;
 
   int y0, yM, yL;
-  if (Sy < 0) {
-    y0 = -Sy;
-    Sy = 0;
+  if (y < 0) {
+    y0 = -y;
+    y = 0;
   } else {
     y0 = 0;
   }
-  yL = sh - Sy;
+  yL = sh - y;
   {
     int yL1 = h - y0;
     if (yL < yL1) {
@@ -50,13 +50,13 @@ void BlitFlip(
   if (yL <= 0) return;
 
   int x0, xM, xL;
-  if (Sx < 0) {
-    x0 = -Sx;
-    Sx = 0;
+  if (x < 0) {
+    x0 = -x;
+    x = 0;
   } else {
     x0 = 0;
   }
-  xL = sw - Sx;
+  xL = sw - x;
   {
     int xL1 = w - x0;
     if (xL < xL1) {
@@ -80,9 +80,9 @@ void BlitFlip(
   if (full_alpha) {
     if (flip_v) {
       if (flip_h) {
-	for (yP = yM - 1; yP >= y0; yP--, Sy++) {
-	  for (xP = xM - 1; xP >= x0; xP--, Sx++) {
-	    Uint32 si = Sy*sp + Sx;
+	for (yP = yM - 1; yP >= y0; yP--, y++) {
+	  for (xP = xM - 1; xP >= x0; xP--, x++) {
+	    Uint32 si = y*sp + x;
 	    Uint32 v = dD[yP*w+xP];
 	    Uint32 o = dS[si];
 	    Uint8 alpha = v>>24;
@@ -91,12 +91,12 @@ void BlitFlip(
 	      BLITFLIP_BLEND(((o>>8)&0xff), ((v>>8)&0xff), alpha) << 8 |
 	      BLITFLIP_BLEND(((o>>16)&0xff), ((v>>16)&0xff), alpha) << 16;
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       } else {
-	for (yP = yM - 1; yP >= y0; yP--, Sy++) {
-	  for (xP = x0; xP < xM; xP++, Sx++) {
-	    Uint32 si = Sy*sp + Sx;
+	for (yP = yM - 1; yP >= y0; yP--, y++) {
+	  for (xP = x0; xP < xM; xP++, x++) {
+	    Uint32 si = y*sp + x;
 	    Uint32 v = dD[yP*w+xP];
 	    Uint32 o = dS[si];
 	    Uint8 alpha = v>>24;
@@ -105,14 +105,14 @@ void BlitFlip(
 	      BLITFLIP_BLEND(((o>>8)&0xff), ((v>>8)&0xff), alpha)<<8 |
 	      BLITFLIP_BLEND(((o>>16)&0xff), ((v>>16)&0xff), alpha) << 16;
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       }
     } else {
       if (flip_h) {
-	for (yP = y0; yP < yM; yP++, Sy++) {
-	  for (xP = xM - 1; xP >= x0; xP--, Sx++) {
-	    Uint32 si = Sy*sp + Sx;
+	for (yP = y0; yP < yM; yP++, y++) {
+	  for (xP = xM - 1; xP >= x0; xP--, x++) {
+	    Uint32 si = y*sp + x;
 	    Uint32 v = dD[yP*w+xP];
 	    Uint32 o = dS[si];
 	    Uint8 alpha = v>>24;
@@ -121,12 +121,12 @@ void BlitFlip(
 	      BLITFLIP_BLEND(((o>>8)&0xff), ((v>>8)&0xff), alpha)<<8 |
 	      BLITFLIP_BLEND(((o>>16)&0xff), ((v>>16)&0xff), alpha) << 16;
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       } else {
-	for (yP = y0; yP < yM; yP++, Sy++) {
-	  for (xP = x0; xP < xM; xP++, Sx++) {
-	    Uint32 si = Sy*sp + Sx;
+	for (yP = y0; yP < yM; yP++, y++) {
+	  for (xP = x0; xP < xM; xP++, x++) {
+	    Uint32 si = y*sp + x;
 	    Uint32 v = dD[yP*w+xP];
 	    Uint32 o = dS[si];
 	    Uint8 alpha = v>>24;
@@ -135,53 +135,53 @@ void BlitFlip(
 	      BLITFLIP_BLEND(((o>>8)&0xff), ((v>>8)&0xff), alpha)<<8 |
 	      BLITFLIP_BLEND(((o>>16)&0xff), ((v>>16)&0xff), alpha) << 16;
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       }
     }
   } else {
     if (flip_v) {
       if (flip_h) {
-	for (yP = yM - 1; yP >= y0; yP--, Sy++) {
-	  for (xP = xM - 1; xP >= x0; xP--, Sx++) {
+	for (yP = yM - 1; yP >= y0; yP--, y++) {
+	  for (xP = xM - 1; xP >= x0; xP--, x++) {
 	    Uint32 v = dD[yP*w+xP];
 	    if (v&0xff000000) {
-	      dS[Sy*sp + Sx] = v&0xffffff;
+	      dS[y*sp + x] = v&0xffffff;
 	    }
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       } else {
-	for (yP = yM - 1; yP >= y0; yP--, Sy++) {
-	  for (xP = x0; xP < xM; xP++, Sx++) {
+	for (yP = yM - 1; yP >= y0; yP--, y++) {
+	  for (xP = x0; xP < xM; xP++, x++) {
 	    Uint32 v = dD[yP*w+xP];
 	    if (v&0xff000000) {
-	      dS[Sy*sp + Sx] = v&0xffffff;
+	      dS[y*sp + x] = v&0xffffff;
 	    }
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       }
     } else {
       if (flip_h) {
-	for (yP = y0; yP < yM; yP++, Sy++) {
-	  for (xP = xM - 1; xP >= x0; xP--, Sx++) {
+	for (yP = y0; yP < yM; yP++, y++) {
+	  for (xP = xM - 1; xP >= x0; xP--, x++) {
 	    Uint32 v = dD[yP*w + xP];
 	    if (v&0xff000000) {
-	      dS[Sy*sp + Sx] = v&0xffffff;
+	      dS[y*sp + x] = v&0xffffff;
 	    }
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       } else {
-	for (yP = y0; yP < yM; yP++, Sy++) {
-	  for (xP = x0; xP < xM; xP++, Sx++) {
+	for (yP = y0; yP < yM; yP++, y++) {
+	  for (xP = x0; xP < xM; xP++, x++) {
 	    Uint32 v = dD[yP*w + xP];
 	    if (v&0xff000000) {
-	      dS[Sy*sp + Sx] = v&0xffffff;
+	      dS[y*sp + x] = v&0xffffff;
 	    }
 	  }
-	  Sx -= xL;
+	  x -= xL;
 	}
       }
     }
